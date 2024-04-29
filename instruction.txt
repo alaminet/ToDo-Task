@@ -1,0 +1,33 @@
+db data create: yes
+db show: yes
+image upload: yes
+authentication: yes
+
+Schema
+Relation
+Logic
+
+=====
+Documentaion
+
+Image upload: Project Implement
+Uploads/adkj/dsfsdf.png
+
+Delete: 
+
+registration:
+
+username
+email
+passwoird
+imagupload
+
+Middleware and token
+
+Budbar 2pm : Design and authentication
+
+friday: Todo 
+
+Winner will get 1k taka as apprisition
+
+https://www.figma.com/file/QtvMiQiWMyALiHPYoFKO5L/%5BMini-projeto%5D-Lista-de-Compras-em-React-(Community)?type=design&node-id=1%3A193&mode=design&t=lKPkfcJIUptdJ9UR-1
