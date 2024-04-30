@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 
-async function OTPEmail(email, verify, template) {
+async function OTPEmail(email, otp, token, template) {
+  const tokenlink = `${process.env.HTTPS}linkverification/${token}`;
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -14,7 +15,7 @@ async function OTPEmail(email, verify, template) {
     from: `"ToDo-Task"`, // sender address
     to: email, // list of receivers
     subject: "OTP Verification: ToDo-Task", // Subject line
-    html: template(verify), // html body
+    html: template(otp, tokenlink), // html body
   });
 
   console.log("OTP sent");

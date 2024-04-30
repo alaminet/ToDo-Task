@@ -1,4 +1,4 @@
-function OTPTemplate(otp) {
+function OTPTemplate(otp, tokenlink) {
   // <p>Your OTP is ${otp.otp}</p>
 
   return `
@@ -24,6 +24,8 @@ function OTPTemplate(otp) {
                     <p style="margin: 0;">${otp}</p>
                 </div>
                 </br>
+                <p style="margin-bottom:0;font-weight:600">Or click this button to confirm your email:</p>
+                <a href="${tokenlink}"><button style="padding:15px 20px;color:#fff;background-color:#007bff;border-style:none;border-radius:5px;font-size:16px">Confirm your email</button></a>
                 <p style="font-style:italic;color:#555555">If you didn't create an account in ToDo-Task, please ignore this message.</p><div class="yj6qo"></div><div class="adL">
             </div>
         </div>

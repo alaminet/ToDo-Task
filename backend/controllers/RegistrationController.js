@@ -21,17 +21,28 @@ const registrationController = async (req, res) => {
   if (existingUser.length > 0) {
     return res.status(401).send({ error: `${email} already used` });
   } else {
-    const user = await new User({
-      username: username,
-      email: email,
-      password: password,
-      otp: "654321",
-      token: "tokennumber12345",
+    bcrypt.hash(password, 10, async function (err, hash) {
+      const token = jwt.sign({ email: email }, process.env.tokenCode);
+      const otp = otpGenerator.generate(6, {
+        upperCaseAlphabets: false,
+        specialChars: false,
+        lowerCaseAlphabets: false,
+      });
+      const user = await new User({
+        username: username,
+        email: email,
+        password: hash,
+        otp: otp,
+        token: token,
+      });
+
+      await user.save();
+
+      //   OTP send to email
+      OTPEmail(email, user.otp, token, OTPTemplate);
+
+      res.status(200).send(user);
     });
-
-    await user.save();
-
-    res.status(200).send(user);
   }
 
   //   if (existingUser.length > 0) {
