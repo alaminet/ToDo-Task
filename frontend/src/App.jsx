@@ -9,6 +9,7 @@ import LoggedOutUser from "./PrivateRoute/LoggedOutUser";
 import Login from "./pages/Login";
 import LoggedInUser from "./PrivateRoute/LoggedInUser";
 import Registration from "./pages/Registration";
+import OTPVerify from "./pages/OTPVerify";
 function App() {
   const route = createBrowserRouter(
     createRoutesFromElements(
@@ -16,6 +17,7 @@ function App() {
         <Route element={<LoggedOutUser />}>
           <Route path="/signup" element={<Registration />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/otpverify/:email" element={<OTPVerify />}></Route>
         </Route>
         <Route element={<LoggedInUser />}>
           <Route path="/" element={<Home />}></Route>

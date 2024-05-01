@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 const LoggedOutUser = () => {
-  const user = useSelector((users) => users.loginSlice.login);
+  const user = useSelector((user) => user.loginSlice.login);
   return user ? <Navigate to="/" /> : <Outlet />;
 };
 

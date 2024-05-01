@@ -4,7 +4,7 @@ import Login from "../pages/Login";
 import { useSelector } from "react-redux";
 
 const LoggedInUser = () => {
-  const user = useSelector((users) => users.loginSlice.login);
+  const user = useSelector((user) => user.loginSlice.login);
   return user ? <Outlet /> : <Login />;
 };
 

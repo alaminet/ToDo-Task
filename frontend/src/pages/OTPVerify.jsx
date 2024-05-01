@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, Checkbox, Flex, Form, Input } from "antd";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Alert, Button, Flex, Form, Input } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Registration = () => {
+const OTPVerify = () => {
   const [loadings, setLoadings] = useState(false);
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("");
   const navigate = useNavigate();
+  const params = useParams();
 
   const onFinish = async (values) => {
     console.log("Success:", values);
     try {
       setLoadings(true);
       const data = await axios.post(
-        "http://localhost:8000/v1/api/auth/registration",
+        "http://localhost:8000/v1/api/auth/otpverify",
         {
-          username: values.username,
-          email: values.email,
-          password: values.password,
+          email: params.email,
+          otp: values.otp,
         },
         {
           headers: {
@@ -30,7 +30,7 @@ const Registration = () => {
       setMsg(data.message);
       setMsgType("success");
       setTimeout(() => {
-        navigate(`/otpverify/${values.email}`);
+        navigate(`/login`);
       }, 1500);
     } catch (error) {
       setLoadings(false);
@@ -54,9 +54,9 @@ const Registration = () => {
       )}
       <Flex justify="center" style={{ marginTop: "50px" }}>
         <div>
-          <h1>Need Your Registration !</h1>
+          <h1>Verify Your OTP !</h1>
           <Form
-            name="registration"
+            name="otpverify"
             // labelCol={{
             //   span: 8,
             // }}
@@ -71,41 +71,16 @@ const Registration = () => {
             autoComplete="off"
           >
             <Form.Item
-              //   label="Username"
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your username!",
-                },
-              ]}
-            >
-              <Input placeholder="Username" />
-            </Form.Item>
-            <Form.Item
               //   label="Email"
-              name="email"
+              name="otp"
               rules={[
                 {
                   required: true,
-                  message: "Please input your Email!",
+                  message: "Please input your OTP!",
                 },
               ]}
             >
-              <Input type="email" placeholder="Your Email" />
-            </Form.Item>
-
-            <Form.Item
-              //   label="Password"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
-            >
-              <Input.Password placeholder="Password" />
+              <Input placeholder="Your OTP" />
             </Form.Item>
 
             <Form.Item style={{ marginBottom: "0" }}>
@@ -115,11 +90,8 @@ const Registration = () => {
                 loading={loadings}
                 disabled={loadings}
               >
-                Submit
+                Verify
               </Button>
-            </Form.Item>
-            <Form.Item>
-              <NavLink to="/login">Already Have an account?</NavLink>
             </Form.Item>
           </Form>
         </div>
@@ -128,4 +100,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default OTPVerify;
