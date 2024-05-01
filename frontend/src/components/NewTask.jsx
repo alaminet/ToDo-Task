@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Alert, Button, Col, Form, Input, Row } from "antd";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-const NewTask = () => {
+const NewTask = ({ click }) => {
+  const user = useSelector((user) => user.loginSlice.login);
   const [loadings, setLoadings] = useState(false);
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("");
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
     try {
       setLoadings(true);
       const data = await axios.post(
@@ -16,6 +17,7 @@ const NewTask = () => {
         {
           title: values.title,
           discription: values.discription,
+          taskby: user._id,
         },
         {
           headers: {
@@ -23,11 +25,13 @@ const NewTask = () => {
           },
         }
       );
+      console.log(data);
       setLoadings(false);
       setMsg(data.data.message);
       setMsgType("success");
       setTimeout(() => {
         setMsg("");
+        click(data.data.task._id);
       }, 1500);
     } catch (error) {
       setLoadings(false);

@@ -1,39 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { Flex, List } from "antd";
 import { CheckCircleFilled, DeleteTwoTone } from "@ant-design/icons";
 
-const CompleteTaskList = () => {
+const CompleteTaskList = ({ tasklist, click }) => {
+  const completeTaskData = tasklist.sort().reverse();
+  const [loadings, setLoadings] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [msgType, setMsgType] = useState("");
   const handleDelete = (e) => {
     console.log(e);
   };
-  const data = [
-    {
-      id: "1",
-      title: "Ant Design Title 1",
-      discription: "Ant Design Title 1",
-    },
-    {
-      id: "2",
-      title: "Ant Design Title 2",
-      discription: "Ant Design Title 2",
-    },
-    {
-      id: "3",
-      title: "Ant Design Title 3",
-      discription: "Ant Design Title 3",
-    },
-    {
-      id: "4",
-      title: "Ant Design Title 4",
-      discription: "Ant Design Title 4",
-    },
-  ];
   return (
     <>
       <div>
         <List
           itemLayout="horizontal"
-          dataSource={data}
+          dataSource={tasklist}
           renderItem={(item, index) => (
             <List.Item key={index}>
               <div style={{ width: "100%" }}>

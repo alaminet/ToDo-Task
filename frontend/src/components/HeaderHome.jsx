@@ -4,7 +4,7 @@ import defaultimg from "../assets/defaultProPic.png";
 import { useSelector } from "react-redux";
 const HeaderHome = () => {
   const user = useSelector((user) => user.loginSlice.login);
-  console.log(user);
+
   return (
     <>
       <div>

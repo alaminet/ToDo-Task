@@ -1,42 +1,53 @@
-import React from "react";
-import { List } from "antd";
+import React, { useState } from "react";
+import axios from "axios";
+import { Alert, List } from "antd";
 import { CheckCircleTwoTone, DeleteTwoTone } from "@ant-design/icons";
 
-const NewTaskList = () => {
-  const handleDone = (e) => {
-    console.log(e);
+const NewTaskList = ({ tasklist, click }) => {
+  const [loadings, setLoadings] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [msgType, setMsgType] = useState("");
+  const handleDone = async (e) => {
+    try {
+      setLoadings(true);
+      const data = await axios.put(
+        "http://localhost:8000/v1/api/task/updatetask",
+        {
+          id: e.id,
+        },
+        {
+          headers: {
+            Authorization: "TeEW3B93guUofdP",
+          },
+        }
+      );
+
+      setLoadings(false);
+      setMsg(data.data.message);
+      setMsgType("success");
+      setTimeout(() => {
+        setMsg("");
+        click(e.id);
+      }, 1500);
+    } catch (error) {
+      setLoadings(false);
+      setMsg(error.response.data.message);
+      setMsgType("error");
+      setTimeout(() => {
+        setMsg("");
+      }, 2000);
+    }
   };
   const handleDelete = (e) => {
     console.log(e);
   };
-  const data = [
-    {
-      id: "1",
-      title: "Ant Design Title 1",
-      discription: "Ant Design Title 1",
-    },
-    {
-      id: "2",
-      title: "Ant Design Title 2",
-      discription: "Ant Design Title 2",
-    },
-    {
-      id: "3",
-      title: "Ant Design Title 3",
-      discription: "Ant Design Title 3",
-    },
-    {
-      id: "4",
-      title: "Ant Design Title 4",
-      discription: "Ant Design Title 4",
-    },
-  ];
   return (
     <>
       <div>
+        {msg && <Alert message={msg} type={msgType} showIcon closable />}
         <List
           itemLayout="horizontal"
-          dataSource={data}
+          dataSource={tasklist}
           renderItem={(item, index) => (
             <List.Item key={index}>
               <List.Item.Meta
@@ -44,6 +55,8 @@ const NewTaskList = () => {
                   <CheckCircleTwoTone
                     style={{ fontSize: "24px" }}
                     onClick={() => handleDone(item)}
+                    loadings={loadings}
+                    disabled={loadings}
                   />
                 }
                 title={item.title}
