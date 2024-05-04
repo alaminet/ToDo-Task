@@ -34,6 +34,7 @@ const registrationController = async (req, res) => {
         password: hash,
         otp: otp,
         token: token,
+        avater: null,
       });
 
       await user.save();

@@ -7,6 +7,7 @@ const userSchema = new Schema({
   password: String,
   otp: String,
   token: String,
+  avater: String,
   verify: {
     type: Boolean,
     default: false,

@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // multer image upload
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./upload/images/profile");
@@ -20,8 +21,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-app.get("/", upload.single("avatar"), function (req, res) {
+app.post("/", upload.single("image"), (req, res) => {
+  console.log(`/upload/images/profile/${req.file.filename}`);
   res.send(`/upload/images/profile/${req.file.filename}`);
 });
 

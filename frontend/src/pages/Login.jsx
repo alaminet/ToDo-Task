@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Alert, Button, Flex, Form, Input } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Loginuser } from "../Slice/UserSlice";
 
@@ -108,6 +108,9 @@ const Login = () => {
               >
                 Login
               </Button>
+            </Form.Item>
+            <Form.Item>
+              <NavLink to="/signup">Don't have an account?</NavLink>
             </Form.Item>
           </Form>
         </div>
