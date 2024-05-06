@@ -25,7 +25,6 @@ const NewTask = ({ click }) => {
           },
         }
       );
-      console.log(data);
       setLoadings(false);
       setMsg(data.data.message);
       setMsgType("success");

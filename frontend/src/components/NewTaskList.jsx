@@ -21,7 +21,6 @@ const NewTaskList = ({ tasklist, click }) => {
           },
         }
       );
-
       setLoadings(false);
       setMsg(data.data.message);
       setMsgType("success");
@@ -30,7 +29,6 @@ const NewTaskList = ({ tasklist, click }) => {
         click(e.id);
       }, 1500);
     } catch (error) {
-      setLoadings(false);
       setMsg(error.response.data.message);
       setMsgType("error");
       setTimeout(() => {
@@ -38,8 +36,34 @@ const NewTaskList = ({ tasklist, click }) => {
       }, 2000);
     }
   };
-  const handleDelete = (e) => {
-    console.log(e);
+  const handleDelete = async (e) => {
+    try {
+      const dataDtl = await axios.put(
+        "http://localhost:8000/v1/api/task/taskDlt",
+        {
+          id: e.id,
+        },
+        {
+          headers: {
+            Authorization: "TeEW3B93guUofdP",
+          },
+        }
+      );
+      console.log(dataDtl);
+      setMsg(dataDtl.data.message);
+      setMsgType("success");
+      setTimeout(() => {
+        setMsg("");
+        click(dataDtl.data.message);
+      }, 1500);
+    } catch (error) {
+      console.log(error);
+      setMsg("Plz Try again !");
+      setMsgType("error");
+      setTimeout(() => {
+        setMsg("");
+      }, 2000);
+    }
   };
   return (
     <>

@@ -1,19 +1,42 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Flex, List } from "antd";
+import { Alert, Flex, List } from "antd";
 import { CheckCircleFilled, DeleteTwoTone } from "@ant-design/icons";
 
 const CompleteTaskList = ({ tasklist, click }) => {
-  const completeTaskData = tasklist.sort().reverse();
-  const [loadings, setLoadings] = useState(false);
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("");
-  const handleDelete = (e) => {
-    console.log(e);
+  const handleDelete = async (e) => {
+    try {
+      const dataDtl = await axios.put(
+        "http://localhost:8000/v1/api/task/taskDlt",
+        {
+          id: e.id,
+        },
+        {
+          headers: {
+            Authorization: "TeEW3B93guUofdP",
+          },
+        }
+      );
+      setMsg(dataDtl.data.message);
+      setMsgType("success");
+      setTimeout(() => {
+        setMsg("");
+        click(dataDtl.data.message);
+      }, 1500);
+    } catch (error) {
+      setMsg("Plz Try again !");
+      setMsgType("error");
+      setTimeout(() => {
+        setMsg("");
+      }, 2000);
+    }
   };
   return (
     <>
       <div>
+        {msg && <Alert message={msg} type={msgType} showIcon closable />}
         <List
           itemLayout="horizontal"
           dataSource={tasklist}

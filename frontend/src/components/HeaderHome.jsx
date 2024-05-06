@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Divider, Flex, Form, Modal } from "antd";
 import defaultimg from "../assets/defaultProPic.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,7 @@ const HeaderHome = () => {
     const result = await axios.post("http://localhost:5000/", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
-    setImageName(`http://localhost:5000${result.data}`);
+    setImageName(result.data);
   };
   const handleCancel = () => {
     setOpen(false);
@@ -71,7 +71,7 @@ const HeaderHome = () => {
               cursor: "pointer",
             }}
             size={80}
-            src={user.avater || defaultimg}
+            src={`http://localhost:5000${user.avater}` || defaultimg}
           />
           <h2
             style={{
